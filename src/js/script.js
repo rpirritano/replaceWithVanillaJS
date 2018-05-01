@@ -17,8 +17,10 @@
 	// get weather data when user clicks Forecast button, then add temp & conditions to view
 	$('.forecast-button').click(function(e) {
 		e.preventDefault();
-		const location = $('#location').val();
-		$('#location').val('');
+//		const location = $('#location').val(); replaced JQuery object with JS variable
+		const location = document.querySelector('#location').value;
+//		$('#location').val('');  replaced JQuery object with JS variable
+		document.querySelector('#location').value = '';
 
 //replaced below commented JQuery code with fetch to use promises for openweathermap API call
 		fetch(url + location + '&appid=' + apiKey).then(function(response) {
@@ -56,9 +58,11 @@
 			city: response.name
 		};
 
-		const $into = $('.conditions')[0];
+//		const $into = $('.conditions')[0];  replaced JQuery object with JS variable
+		const into = document.querySelector('.conditions');
 
-		ReactDOM.render(<Forecast {...state} />, $into);
+//		ReactDOM.render(<Forecast {...state} />, $into); replaced JQuery object with JS variable
+		ReactDOM.render(<Forecast {...state} />, into);
 
 		function Forecast(props) {
 			return (
@@ -85,7 +89,10 @@
 			// if the clicked tab does not have the class 'selected', then location of 'selected' class must be added
 			//   to the clicked element and removed from its siblings
 			category = $(this).attr('id');
-			$('.options div').removeClass('selected');
+//			$('.options div').removeClass('selected'); replaced JQuery object with JS and added forEach
+			document.querySelectorAll('.options div').forEach(function(el) {
+				el.classList.remove('selected');
+			})
 			$(this).addClass('selected');
 		}
 
@@ -109,9 +116,11 @@
 			}
 		}
 
-		const $into = $('.activities')[0];
+//		const $into = $('.activities')[0];  replaced JQuery object with JS variable
+		const into = document.querySelector('.activities');
 
-		ReactDOM.render(<Activities {...state} />, $into);
+//		ReactDOM.render(<Activities {...state} />, $into);  replaced JQuery object with JS variable
+		ReactDOM.render(<Activities {...state} />, into);
 
 		function Activities(props) {
 			const activitiesList = props.activities.map(function(activity, index) {
