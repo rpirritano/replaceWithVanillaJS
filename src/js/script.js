@@ -89,7 +89,9 @@ document.querySelectorAll('.options div').forEach(function(el) {
 		cityPara.setAttribute('class', 'city');
 		cityPara.textContent = state.city;
 		let conditionsPara = document.createElement('p');
-		conditionsPara.textContent = state.degCInt + '\u00B0 C / ' + state.degFInt + '\u00B0 F / ';
+// rewrite as template literal
+		//conditionsPara.textContent = state.degCInt + '\u00B0 C / ' + state.degFInt + '\u00B0 C  ';
+		conditionsPara.textContent = `${state.degCInt}\u00B0 C / ${state.degFInt}\u00B0 C`;
 		let iconImage = document.createElement('img');
 		iconImage.setAttribute('src', state.icon);
 		iconImage.setAttribute('alt', state.condition);
