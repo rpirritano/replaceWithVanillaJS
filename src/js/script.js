@@ -15,14 +15,18 @@
 	let category = 'all';
 
 	// get weather data when user clicks Forecast button, then add temp & conditions to view
-	$('.forecast-button').click(function(e) {
-		e.preventDefault();
-//		const location = $('#location').val(); replaced JQuery object with JS variable
-		const location = document.querySelector('#location').value;
-//		$('#location').val('');  replaced JQuery object with JS variable
-		document.querySelector('#location').value = '';
 
-//replaced below commented JQuery code with fetch to use promises for openweathermap API call
+
+// ---------- Replace with JS addEventListener -----------
+//$('.forecast-button').click(function(e) {
+document.querySelector('.forecast-button').addEventListener('click', function(e) {
+	e.preventDefault();
+//		const location = $('#location').val();
+	const location = document.querySelector('#location').value;
+//		$('#location').val('');
+	document.querySelector('#location').value = '';
+
+// ------- replaced below commented JQuery code with fetch to use promises for openweathermap API call -----
 		fetch(url + location + '&appid=' + apiKey).then(function(response) {
 				return(response.json());
 		}).then(function(response) {
@@ -30,7 +34,7 @@
 			}).catch(function() {
 				updateUIFailure();
 			});
-	});
+	}, false);
 
 	/*
 			$.get(url + location + '&appid=' + apiKey).done(function(response) {
@@ -42,7 +46,11 @@
 	*/
 
 	// update list of sports when user selects a different category (solo/team/all)
-	$('.options div').on('click', updateActivityList);
+	// ---------- Replace with JS addEventListener -----------
+//	$('.options div').on('click', updateActivityList);
+document.querySelectorAll('.options div').forEach(function(el) {
+	el.addEventListener('click', updateActivityList, false);
+});
 
 	// handle ajax success
 	function updateUISuccess(response) {
@@ -58,10 +66,12 @@
 			city: response.name
 		};
 
-//		const $into = $('.conditions')[0];  replaced JQuery object with JS variable
+// ------ replaced JQuery object with JS variable -----
+//		const $into = $('.conditions')[0];
 		const into = document.querySelector('.conditions');
 
-//		ReactDOM.render(<Forecast {...state} />, $into); replaced JQuery object with JS variable
+// ------ replaced JQuery object with JS variable -----
+//		ReactDOM.render(<Forecast {...state} />, $into);
 		ReactDOM.render(<Forecast {...state} />, into);
 
 		function Forecast(props) {
@@ -78,22 +88,31 @@
 
 	// handle selection of a new category (team/solo/all)
 	function updateActivityList(event) {
-		if (event !== undefined && $(this).hasClass('selected')) {
+	// -----	{ change JQuery $(this) -----
+		//if (event !== undefined && $(this).hasClass('selected')) }
+		if (event !== undefined && event.target.classList.contains('selected')) {
 			// if the 'event' parameter is defined, then a tab has been clicked; if not, then this is the
 			//   default case and the view simply needs to be updated
 			// if the clicked tab has the class 'selected', then no need to change location of 'selected' class
 			//   or change the DOM
 			return true;
-		} else if (event !== undefined && !$(this).hasClass('selected')) {
+			// -----	{ change JQuery $(this) -----
+	//	} else if (event !== undefined && !$(this).hasClass('selected'))
+			} else if (event !== undefined && !event.target.classList.contains('selected')) {
 			// if the 'event' parameter is defined, then a tab has been clicked
 			// if the clicked tab does not have the class 'selected', then location of 'selected' class must be added
 			//   to the clicked element and removed from its siblings
-			category = $(this).attr('id');
-//			$('.options div').removeClass('selected'); replaced JQuery object with JS and added forEach
+			// -----	{ change JQuery $(this) -----
+			//category = $(this).attr('id');
+				category = event.target.id;
+			// -----	replaced JQuery object with JS and added forEach ----
+//			$('.options div').removeClass('selected');
 			document.querySelectorAll('.options div').forEach(function(el) {
 				el.classList.remove('selected');
 			})
-			$(this).addClass('selected');
+			// -----	 change JQuery $(this) -----
+			//$(this).addClass('selected');
+			event.target.classList.add('selected');
 		}
 
 		state.activities = [];
