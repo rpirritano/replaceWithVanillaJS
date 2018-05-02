@@ -93,6 +93,16 @@ document.querySelectorAll('.options div').forEach(function(el) {
 		let iconImage = document.createElement('img');
 		iconImage.setAttribute('src', state.icon);
 		iconImage.setAttribute('alt', state.condition);
+		//order is important for order of appending
+		conditionsPara.appendChild(iconImage); //append image as child to paragragh
+		container.appendChild(cityPara);
+		container.appendChild(conditionsPara);
+
+		if (document.querySelector('.conditions div')) {
+			into.replaceChild(container, document.querySelector('.conditions div'));
+		} else {
+			into.appendChild(container);
+		}
 
 		updateActivityList();
 	}
@@ -169,12 +179,18 @@ document.querySelectorAll('.options div').forEach(function(el) {
 	let list = document.createElement('ul');
 
 	state.activities.forEach(function(activity, index) {
-		let listItem = document.createElement('li');
-		listItem.textContent = activity;
-		listItem.setAttribute('key', index);
-
+			let listItem = document.createElement('li');
+			listItem.textContent = activity;
+			listItem.setAttribute('key', index);
+			list.appendChild(listItem);
 		//console.log(listItem); //to check if element is created
 	});
+	activitiesContainer.appendChild(list);
+	if (document.querySelector('.activities div')) {
+		into.replaceChild(activitiesContainer, document.querySelector('.activities div'));
+	} else {
+		into.appendChild(activitiesContainer);
+	}
 	//console.log(activitiesContainer); //to check if element is created
   //console.log(list); //to check if element is created
 		$('.results').slideDown(300);
