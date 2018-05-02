@@ -195,7 +195,9 @@ document.querySelectorAll('.options div').forEach(function(el) {
 	}
 	//console.log(activitiesContainer); //to check if element is created
   //console.log(list); //to check if element is created
-		$('.results').slideDown(300);
+	//replace JQuery with JS and CSS
+		//$('.results').slideDown(300);
+		document.querySelector('.results').classList.add('open');
 	}
 
 	// handle ajax failure

@@ -230,9 +230,21 @@ em {
 }
 
 .nav .nav-elements .forecast .results {
-    display: none;
-    border: 1px solid white;
-    border-top: none;
+/*    display: none; */
+  height: auto;
+  max-height: 0;
+  overflow-y: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+/*added class to use Vanilla JS - must be after above*/
+/*moved the border and border-top from above to this class*/
+/*then commented out display and added transition above and below*/
+.nav .nav-elements .forecast .open {
+  /*display: block; */
+  border: 1px solid white;
+  border-top: none;
+  max-height: 250px;
 }
 
 .nav .nav-elements .forecast .results .options {
